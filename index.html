@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <title>Sherlock Holmes — Character Card</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --bg-dark: #0a0a0f;
+      --bg-card: rgba(15, 15, 25, 0.8);
+      --accent: #00ff88;
+      --accent-light: #39ff14;
+      --accent-dim: #00cc6a;
+      --text: #f0fff4;
+      --text-muted: #b8d4be;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes shimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text);
+      background: linear-gradient(135deg, #0a0a0f 0%, #0d1f14 35%, #0a1520 70%, #0a0a0f 100%);
+      background-attachment: fixed;
+      line-height: 1.6;
+    }
+    .lang-switch {
+      position: fixed;
+      top: 1rem;
+      right: 1.5rem;
+      z-index: 10;
+      display: flex;
+      gap: 0.25rem;
+      animation: fadeInUp 0.7s ease-out both;
+    }
+    .lang-switch button {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: rgba(10, 10, 15, 0.95);
+      border: 1px solid rgba(0, 255, 136, 0.4);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .lang-switch button:hover {
+      color: var(--accent-light);
+      border-color: var(--accent);
+    }
+    .lang-switch button.active {
+      color: var(--accent-light);
+      background: rgba(0, 255, 136, 0.15);
+      border-color: var(--accent);
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+    section {
+      padding: 3rem 0;
+      border-bottom: 1px solid rgba(0, 255, 136, 0.25);
+      animation: fadeInUp 0.8s ease-out both;
+    }
+    section.hero { animation-delay: 0.08s; }
+    section.about { animation-delay: 0.25s; }
+    section.contacts { animation-delay: 0.45s; }
+    section:last-of-type { border-bottom: none; }
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2rem;
+    }
+    .hero-text { flex: 1; min-width: 260px; }
+    .hero-photo {
+      flex-shrink: 0;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(0, 255, 136, 0.6);
+      box-shadow: 0 0 32px rgba(57, 255, 20, 0.25);
+      animation: fadeInUp 0.65s ease-out 0.15s both;
+    }
+    h1 {
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      background: linear-gradient(90deg, #39ff14, #00ff88, #00fff7, #39ff14, #00ff88);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 0.65s ease-out 0.2s both, shimmer 5s ease-in-out 0.5s infinite;
+    }
+    .hero .subtitle {
+      font-size: 1.15rem;
+      color: var(--accent-light);
+      margin: 0 0 1rem;
+      font-weight: 500;
+      animation: fadeInUp 0.65s ease-out 0.3s both;
+    }
+    .hero .desc {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 540px;
+      margin: 0;
+      animation: fadeInUp 0.65s ease-out 0.4s both;
+    }
+    h2 {
+      font-size: 1.25rem;
+      margin: 0 0 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: linear-gradient(90deg, #00ff88, #00fff7, #39ff14, #00ff88);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s ease-in-out infinite;
+    }
+    .about p {
+      margin: 0 0 1rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .about p:last-child { margin-bottom: 0; }
+    .contacts a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent-light);
+      text-decoration: none;
+      margin-right: 1.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
+      transition: color 0.25s ease, transform 0.2s ease;
+      position: relative;
+    }
+    .contacts a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      transition: width 0.25s ease;
+    }
+    .contacts a:hover {
+      color: #7affb8;
+      transform: translateX(4px);
+    }
+    .contacts a:hover::after {
+      width: 100%;
+    }
+    .contacts .email { margin-bottom: 1rem; }
+    @media (max-width: 480px) {
+      .lang-switch { top: 0.75rem; right: 1rem; }
+      .container { padding: 1.5rem 1rem; }
+      section { padding: 2rem 0; }
+      .hero { flex-direction: column; text-align: center; }
+      .hero .desc { margin-left: auto; margin-right: auto; }
+      .contacts a { margin-right: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="lang-switch" aria-label="Language">
+    <button type="button" data-lang="en" class="active">EN</button>
+    <button type="button" data-lang="ru">RU</button>
+  </nav>
+
+  <div class="container">
+    <section class="hero">
+      <img
+        class="hero-photo"
+        src="sherlock-hero.png"
+        alt="Sherlock Holmes"
+        width="160"
+        height="160"
+      >
+      <div class="hero-text">
+        <h1 data-i18n="heroName">Sherlock Holmes</h1>
+        <p class="subtitle" data-i18n="heroSubtitle">Consulting Detective</p>
+        <p class="desc" data-i18n="heroDesc">Private detective based at 221B Baker Street, London. Renowned for observation, deduction, and solving the most baffling cases.</p>
+      </div>
+    </section>
+
+    <section class="about">
+      <h2 data-i18n="aboutTitle">About</h2>
+      <p data-i18n="about1">Sherlock Holmes is a fictional detective created by Sir Arthur Conan Doyle, first appearing in 1887. He is known for his sharp mind, mastery of disguise, and ability to draw conclusions from the smallest details. He lives at 221B Baker Street with his friend and chronicler Dr. John Watson.</p>
+      <p data-i18n="about2">Holmes applies strict logic and scientific method to every case. He plays the violin, practices boxing and fencing, and has a deep knowledge of chemistry and forensic science. His methods of observation and deductive reasoning have made him one of the most famous characters in world literature.</p>
+      <p data-i18n="about3">The character has been adapted countless times in film, television, and theatre. Holmes remains a symbol of intellect and the power of reason—and an enduring icon of the detective genre.</p>
+    </section>
+
+    <section class="contacts">
+      <h2 data-i18n="contactsTitle">Contacts</h2>
+      <p class="email"><a href="mailto:221b@bakerstreet.example">✉ <span data-i18n="contactsEmail">221b@bakerstreet.example</span></a></p>
+      <a href="#">Telegram</a>
+      <a href="#">Baker Street</a>
+      <a href="#">Watson's Blog</a>
+    </section>
+  </div>
+
+  <script>
+    var i18n = {
+      en: {
+        heroName: 'Sherlock Holmes',
+        heroSubtitle: 'Consulting Detective',
+        heroDesc: 'Private detective based at 221B Baker Street, London. Renowned for observation, deduction, and solving the most baffling cases.',
+        aboutTitle: 'About',
+        about1: 'Sherlock Holmes is a fictional detective created by Sir Arthur Conan Doyle, first appearing in 1887. He is known for his sharp mind, mastery of disguise, and ability to draw conclusions from the smallest details. He lives at 221B Baker Street with his friend and chronicler Dr. John Watson.',
+        about2: 'Holmes applies strict logic and scientific method to every case. He plays the violin, practices boxing and fencing, and has a deep knowledge of chemistry and forensic science. His methods of observation and deductive reasoning have made him one of the most famous characters in world literature.',
+        about3: "The character has been adapted countless times in film, television, and theatre. Holmes remains a symbol of intellect and the power of reason—and an enduring icon of the detective genre.",
+        contactsTitle: 'Contacts',
+        contactsEmail: '221b@bakerstreet.example'
+      },
+      ru: {
+        heroName: 'Шерлок Холмс',
+        heroSubtitle: 'Частный консультант-детектив',
+        heroDesc: 'Частный детектив с резиденцией на Бейкер-стрит, 221Б, Лондон. Известен наблюдательностью, дедукцией и разгадкой самых запутанных дел.',
+        aboutTitle: 'О себе',
+        about1: 'Шерлок Холмс — литературный персонаж, созданный Артуром Конан Дойлом и впервые появившийся в 1887 году. Известен острым умом, искусством перевоплощения и умением делать выводы из мельчайших деталей. Живёт на Бейкер-стрит, 221Б, вместе с другом и летописцем доктором Джоном Ватсоном.',
+        about2: 'Холмс применяет к каждому делу строгую логику и научный метод. Играет на скрипке, занимается боксом и фехтованием, глубоко знает химию и криминалистику. Его методы наблюдения и дедукции сделали его одним из самых известных персонажей мировой литературы.',
+        about3: 'Персонаж бесчисленно экранизировался и ставился в театре. Холмс остаётся символом интеллекта и силы разума — и одной из главных икон детективного жанра.',
+        contactsTitle: 'Контакты',
+        contactsEmail: '221b@bakerstreet.example'
+      }
+    };
+
+    var currentLang = localStorage.getItem('lang') || 'en';
+
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (i18n[lang] && i18n[lang][key]) el.textContent = i18n[lang][key];
+      });
+      document.querySelectorAll('.lang-switch button').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+      document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
+    }
+
+    document.querySelectorAll('.lang-switch button').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        setLang(this.getAttribute('data-lang'));
+      });
+    });
+
+    setLang(currentLang);
+  </script>
+</body>
+</html>
