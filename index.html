@@ -16,6 +16,7 @@
       --accent-dim: #00cc6a;
       --text: #f0fff4;
       --text-muted: #b8d4be;
+      --bg-gradient: linear-gradient(135deg, #0a0a0f 0%, #0d1f14 35%, #0a1520 70%, #0a0a0f 100%);
     }
     @keyframes fadeInUp {
       from {
@@ -37,9 +38,20 @@
       min-height: 100vh;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       color: var(--text);
-      background: linear-gradient(135deg, #0a0a0f 0%, #0d1f14 35%, #0a1520 70%, #0a0a0f 100%);
+      background: var(--bg-gradient);
       background-attachment: fixed;
       line-height: 1.6;
+      transition: background 0.4s ease, color 0.25s ease;
+    }
+    body.theme-light {
+      --bg-dark: #f5f5f7;
+      --bg-card: rgba(255, 255, 255, 0.85);
+      --accent: #2563eb;
+      --accent-light: #3b82f6;
+      --accent-dim: #1d4ed8;
+      --text: #0f172a;
+      --text-muted: #4b5563;
+      --bg-gradient: linear-gradient(135deg, #f5f5f7 0%, #e5e7eb 35%, #e0f2fe 70%, #f5f5f7 100%);
     }
     .lang-switch {
       position: fixed;
@@ -70,6 +82,10 @@
       background: rgba(0, 255, 136, 0.15);
       border-color: var(--accent);
     }
+    #theme-toggle {
+      font-size: 0.9rem;
+      padding-inline: 0.6rem;
+    }
     .container {
       max-width: 720px;
       margin: 0 auto;
@@ -78,12 +94,8 @@
     section {
       padding: 3rem 0;
       border-bottom: 1px solid rgba(0, 255, 136, 0.25);
-      animation: fadeInUp 0.8s ease-out both;
     }
-    section.hero { animation-delay: 0.08s; }
-    section.about { animation-delay: 0.25s; }
-    section.services { animation-delay: 0.35s; }
-    section.contacts { animation-delay: 0.45s; }
+    section.hero { animation: fadeInUp 0.8s ease-out both; }
     section:last-of-type { border-bottom: none; }
     .hero {
       display: flex;
@@ -192,6 +204,96 @@
     .services-list .name { color: var(--text); font-weight: 500; }
     .services-list .price { color: var(--accent-light); white-space: nowrap; }
     .services-note { margin-top: 1rem; color: var(--text-muted); font-size: 0.875rem; }
+    .visitor {
+      margin-top: 1.25rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    .reveal.visible {
+      animation: fadeInUp 0.8s ease-out both;
+    }
+    .contact-form {
+      padding-top: 2rem;
+    }
+    .contact-form form {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 1.5rem 1.25rem;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(0, 255, 136, 0.18);
+    }
+    .contact-form .form-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .contact-form label {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 200px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .contact-form input,
+    .contact-form textarea {
+      margin-top: 0.4rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.65);
+      color: var(--text);
+      font: inherit;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    body.theme-light .contact-form input,
+    body.theme-light .contact-form textarea {
+      background: rgba(255, 255, 255, 0.95);
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: var(--accent-light);
+      box-shadow: 0 0 0 1px rgba(0, 255, 136, 0.4);
+    }
+    .contact-form textarea {
+      min-height: 120px;
+    }
+    .form-error {
+      min-height: 1.2rem;
+      margin: 0.25rem 0 0.75rem;
+      font-size: 0.8rem;
+      color: #fca5a5;
+    }
+    .form-submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem 1.4rem;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      color: #020617;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(0, 255, 136, 0.35);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    }
+    .form-submit:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 0 18px 40px rgba(0, 255, 136, 0.45);
+    }
+    .form-submit:active {
+      transform: translateY(0);
+      box-shadow: 0 10px 24px rgba(0, 255, 136, 0.35);
+    }
     @media (max-width: 480px) {
       .lang-switch { top: 0.75rem; right: 1rem; }
       .container { padding: 1.5rem 1rem; }
@@ -202,10 +304,11 @@
     }
   </style>
 </head>
-<body>
-  <nav class="lang-switch" aria-label="Language">
+<body class="theme-dark">
+  <nav class="lang-switch" aria-label="Language and theme">
     <button type="button" data-lang="en" class="active">EN</button>
     <button type="button" data-lang="ru">RU</button>
+    <button type="button" id="theme-toggle" aria-label="Toggle color theme">🌙</button>
   </nav>
 
   <div class="container">
@@ -221,17 +324,18 @@
         <h1 data-i18n="heroName">Sherlock Holmes</h1>
         <p class="subtitle" data-i18n="heroSubtitle">Consulting Detective</p>
         <p class="desc" data-i18n="heroDesc">Private detective based at 221B Baker Street, London. Renowned for observation, deduction, and solving the most baffling cases.</p>
+        <p class="visitor" id="visitor-counter"></p>
       </div>
     </section>
 
-    <section class="about">
+    <section class="about reveal">
       <h2 data-i18n="aboutTitle">About</h2>
       <p data-i18n="about1">Sherlock Holmes is a fictional detective created by Sir Arthur Conan Doyle, first appearing in 1887. He is known for his sharp mind, mastery of disguise, and ability to draw conclusions from the smallest details. He lives at 221B Baker Street with his friend and chronicler Dr. John Watson.</p>
       <p data-i18n="about2">Holmes applies strict logic and scientific method to every case. He plays the violin, practices boxing and fencing, and has a deep knowledge of chemistry and forensic science. His methods of observation and deductive reasoning have made him one of the most famous characters in world literature.</p>
       <p data-i18n="about3">The character has been adapted countless times in film, television, and theatre. Holmes remains a symbol of intellect and the power of reason—and an enduring icon of the detective genre.</p>
     </section>
 
-    <section class="services">
+    <section class="services reveal">
       <h2 data-i18n="servicesTitle">Services &amp; Fees</h2>
       <ul class="services-list">
         <li><span class="name" data-i18n="s1name">Surveillance &amp; observation</span> <span class="price" data-i18n="s1price">from £65/hour</span></li>
@@ -243,7 +347,29 @@
       <p class="services-note" data-i18n="servicesNote">Final fee depends on complexity and urgency. Initial consultation by arrangement. Contact for a confidential discussion.</p>
     </section>
 
-    <section class="contacts">
+    <section class="contact-form reveal">
+      <h2 data-i18n="formTitle">Write to me</h2>
+      <form id="contact-form" novalidate>
+        <div class="form-row">
+          <label>
+            <span data-i18n="formNameLabel">Name</span>
+            <input type="text" id="form-name" name="name" autocomplete="name">
+          </label>
+          <label>
+            <span data-i18n="formEmailLabel">Email</span>
+            <input type="email" id="form-email" name="email" autocomplete="email">
+          </label>
+        </div>
+        <label class="form-full">
+          <span data-i18n="formMessageLabel">Message</span>
+          <textarea id="form-message" name="message" rows="4"></textarea>
+        </label>
+        <p class="form-error" id="form-error" aria-live="polite"></p>
+        <button type="submit" class="form-submit" data-i18n="formSubmit">Send</button>
+      </form>
+    </section>
+
+    <section class="contacts reveal">
       <h2 data-i18n="contactsTitle">Contacts</h2>
       <p class="email"><a href="mailto:221b@bakerstreet.example">✉ <span data-i18n="contactsEmail">221b@bakerstreet.example</span></a></p>
       <a href="#">Telegram</a>
@@ -415,7 +541,15 @@
         s5price: 'by quotation',
         servicesNote: 'Final fee depends on complexity and urgency. Initial consultation by arrangement. Contact for a confidential discussion.',
         chatTitle: 'Consultation',
-        chatPlaceholder: 'Type a message...'
+        chatPlaceholder: 'Type a message...',
+        formTitle: 'Write to me',
+        formNameLabel: 'Name',
+        formEmailLabel: 'Email',
+        formMessageLabel: 'Message',
+        formSubmit: 'Send',
+        formErrorRequired: 'Please fill in all the fields.',
+        formErrorEmail: 'Please enter a valid email address.',
+        formSuccess: 'Thank you, {name}! Your message has been noted.'
       },
       ru: {
         heroName: 'Шерлок Холмс',
@@ -440,11 +574,21 @@
         s5price: 'по запросу',
         servicesNote: 'Итоговая стоимость зависит от сложности и срочности. Первичная консультация по договорённости. Свяжитесь для конфиденциального обсуждения.',
         chatTitle: 'Консультация',
-        chatPlaceholder: 'Напишите сообщение...'
+        chatPlaceholder: 'Напишите сообщение...',
+        formTitle: 'Написать мне',
+        formNameLabel: 'Имя',
+        formEmailLabel: 'Email',
+        formMessageLabel: 'Сообщение',
+        formSubmit: 'Отправить',
+        formErrorRequired: 'Пожалуйста, заполните все поля.',
+        formErrorEmail: 'Пожалуйста, укажите корректный адрес email.',
+        formSuccess: 'Спасибо, {name}! Ваше сообщение сохранено (пока без отправки).'
       }
     };
 
     var currentLang = localStorage.getItem('lang') || 'en';
+    var currentTheme = localStorage.getItem('theme') || 'dark';
+    var visitorCount = 0;
 
     function setLang(lang) {
       currentLang = lang;
@@ -461,6 +605,98 @@
       var inputEl = document.getElementById('user-message');
       if (titleEl && i18n[lang].chatTitle) titleEl.textContent = i18n[lang].chatTitle;
       if (inputEl && i18n[lang].chatPlaceholder) inputEl.placeholder = i18n[lang].chatPlaceholder;
+      updateVisitorText();
+    }
+
+    function applyTheme(theme) {
+      currentTheme = theme;
+      localStorage.setItem('theme', theme);
+      document.body.classList.toggle('theme-light', theme === 'light');
+      document.body.classList.toggle('theme-dark', theme === 'dark');
+      var btn = document.getElementById('theme-toggle');
+      if (btn) {
+        btn.textContent = theme === 'light' ? '☀️' : '🌙';
+        btn.setAttribute('aria-label', theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
+      }
+    }
+
+    function initTheme() {
+      applyTheme(currentTheme);
+      var toggle = document.getElementById('theme-toggle');
+      if (toggle) {
+        toggle.addEventListener('click', function() {
+          applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        });
+      }
+    }
+
+    function initScrollReveal() {
+      var elements = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        elements.forEach(function(el) { el.classList.add('visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.25 });
+      elements.forEach(function(el) { observer.observe(el); });
+    }
+
+    function updateVisitorText() {
+      var el = document.getElementById('visitor-counter');
+      if (!el || !visitorCount) return;
+      if (currentLang === 'ru') {
+        el.textContent = 'Вы ' + visitorCount + '-й посетитель';
+      } else {
+        el.textContent = 'You are visitor #' + visitorCount;
+      }
+    }
+
+    function initVisitorCounter() {
+      var el = document.getElementById('visitor-counter');
+      if (!el) return;
+      var raw = localStorage.getItem('visitorCount');
+      var n = parseInt(raw || '0', 10);
+      if (!isFinite(n) || n < 0) n = 0;
+      n += 1;
+      visitorCount = n;
+      localStorage.setItem('visitorCount', String(n));
+      updateVisitorText();
+    }
+
+    function initContactForm() {
+      var form = document.getElementById('contact-form');
+      if (!form) return;
+      var nameInput = document.getElementById('form-name');
+      var emailInput = document.getElementById('form-email');
+      var msgInput = document.getElementById('form-message');
+      var errorEl = document.getElementById('form-error');
+      var emailRe = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var name = (nameInput.value || '').trim();
+        var email = (emailInput.value || '').trim();
+        var msg = (msgInput.value || '').trim();
+        var dict = i18n[currentLang];
+        errorEl.textContent = '';
+
+        if (!name || !email || !msg) {
+          errorEl.textContent = dict.formErrorRequired;
+          return;
+        }
+        if (!emailRe.test(email)) {
+          errorEl.textContent = dict.formErrorEmail;
+          return;
+        }
+        alert(dict.formSuccess.replace('{name}', name));
+        form.reset();
+      });
     }
 
     document.querySelectorAll('.lang-switch button').forEach(function(btn) {
@@ -470,6 +706,10 @@
     });
 
     setLang(currentLang);
+    initTheme();
+    initScrollReveal();
+    initVisitorCounter();
+    initContactForm();
   </script>
 </body>
 </html>
