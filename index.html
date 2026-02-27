@@ -496,12 +496,25 @@
           body: JSON.stringify({ message: message })
         });
         document.getElementById(typingId) && document.getElementById(typingId).remove();
-        if (!res.ok) { var err = await res.json(); throw new Error(err.error || 'Request failed'); }
-        var data = await res.json();
-        addChatMessage(data.response, 'assistant');
+        if (!res.ok) {
+          var err;
+          try { err = await res.json(); } catch (_) { err = {}; }
+          throw new Error(err && err.error ? err.error : ('Request failed (' + res.status + ')'));
+        }
+        var data;
+        try {
+          data = await res.json();
+        } catch (_) {
+          throw new Error('Unexpected server response');
+        }
+        if (data && data.response) {
+          addChatMessage(data.response, 'assistant');
+        } else {
+          throw new Error('Empty server response');
+        }
       } catch (err) {
         document.getElementById(typingId) && document.getElementById(typingId).remove();
-        addChatMessage('Sorry, something went wrong: ' + err.message, 'error');
+        addChatMessage('Sorry, something went wrong. Please try again later.', 'error');
       }
       sendBtn.disabled = false;
     };
