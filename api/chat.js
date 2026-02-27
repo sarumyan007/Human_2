@@ -10,7 +10,7 @@ const KNOWLEDGE = {
     contact: 'Contact: Email 221b@bakerstreet.example, Telegram, or visit Baker Street. For a confidential discussion, write or call.',
     prices: 'Surveillance from £65/hour; Missing persons from £350; Background checks from £150; Evidence verification from £400; other work by quotation.',
     greeting: 'Good evening. I am at your service regarding our investigative work, fees, or any confidential matter. What would you like to know?',
-    smalltalk: 'I am well, thank you. How can I assist you today with our services or fees?'
+    smalltalk: 'I am well, thank you. How can I assist you today with our services or fees?',
     default: 'I would need more details to give a precise answer. Please write to 221b@bakerstreet.example or use the contact links on the site for a confidential discussion.'
   },
   ru: {
