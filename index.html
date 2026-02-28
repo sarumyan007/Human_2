@@ -132,6 +132,15 @@
       font-weight: 500;
       animation: fadeInUp 0.65s ease-out 0.3s both;
     }
+    body.theme-light .hero .subtitle {
+      color: transparent;
+      background: linear-gradient(90deg, #1d4ed8, #3b82f6, #8b5cf6, #6366f1, #3b82f6, #1d4ed8);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 0.65s ease-out 0.3s both, shimmer 4s ease-in-out infinite;
+    }
     .hero .desc {
       color: var(--text-muted);
       font-size: 1rem;
