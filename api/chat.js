@@ -44,7 +44,7 @@ function answer(message, lang) {
   } else if (/(how are you|how's it going|как дел|как жизнь|как поживаете)/i.test(m)) {
     kind = 'smalltalk';
     result = L.smalltalk || L.greeting;
-  } else if (/(service|услуг|услуги|what do you do|чем занимаетесь|чем вы занимаетесь|какие услуги|виды услуг)/i.test(m)) {
+  } else if (/(service|услуг|услуги|what do you do|чем занимаетесь|чем вы занимаетесь|какие услуги|виды услуг|найти|розыск|разыскать|поиск человек|поиск людей)/i.test(m)) {
     kind = 'services';
     result = L.services;
   } else if (/(price|cost|fee|цен|стоимост|прайс|сколько стоит|сколько будет стоить|какая ценa|какая стоимост|по чем|почем|алиби)/i.test(m)) {
@@ -57,6 +57,29 @@ function answer(message, lang) {
     kind = 'greeting';
     result = L.greeting;
   }
+
+  // #region agent log
+  fetch('http://127.0.0.1:7758/ingest/3f2d0565-3ea2-4db2-9669-8227819b2eb8', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Debug-Session-Id': '00ce66'
+    },
+    body: JSON.stringify({
+      sessionId: '00ce66',
+      runId: 'chat-post-fix-husband',
+      hypothesisId: 'H2',
+      location: 'api/chat.js:answer',
+      message: 'answer-classification',
+      data: {
+        lang,
+        kind,
+        snippet: m.slice(0, 80)
+      },
+      timestamp: Date.now()
+    })
+  }).catch(() => {});
+  // #endregion
 
   return result;
 }
